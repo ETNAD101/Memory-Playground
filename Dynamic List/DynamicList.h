@@ -1,4 +1,7 @@
 #pragma once
+
+// Trying to make the same lists that python has
+
 template <class T>
 class DynamicList {
 private:
@@ -22,6 +25,9 @@ public:
 		prevNode = nullptr;
 		currentNode = nullptr;
 	}
+	~DynamicList() {
+		clear();
+	}
 
 	void append(T p_data) {
 		Node* node = new Node{ nodes, nullptr, nullptr, p_data };
@@ -36,6 +42,10 @@ public:
 
 		currentNode = node;
 		nodes++;
+	}
+
+	void insert(T p_data, int p_pos) {
+
 	}
 
 	void pop() {
@@ -55,6 +65,10 @@ public:
 
 	void pop(int p_pop) {
 
+	}
+
+	int length() {
+		return nodes;
 	}
 
 	void clear() {
