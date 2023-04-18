@@ -14,16 +14,16 @@ private:
 
 private:
 	int nodes;
-	Node* firstNode;
+	Node* head;
 	Node* prevNode;
-	Node* currentNode;
+	Node* tail;
 
 public:
 	DynamicList() {
 		nodes = 0;
-		firstNode = nullptr;
+		head = nullptr;
 		prevNode = nullptr;
-		currentNode = nullptr;
+		tail = nullptr;
 	}
 	~DynamicList() {
 		clear();
@@ -33,14 +33,14 @@ public:
 		Node* node = new Node{ nodes, nullptr, nullptr, p_data };
 
 		if (nodes == 0) {
-			firstNode = node;
+			head = node;
 		}
 		else {
-			node->prev = currentNode;
-			currentNode->next = node;
+			node->prev = tail;
+			tail->next = node;
 		}
 
-		currentNode = node;
+		tail = node;
 		nodes++;
 	}
 
@@ -49,16 +49,16 @@ public:
 	}
 
 	void pop() {
-		prevNode = currentNode->prev;
-		delete currentNode;
+		prevNode = tail->prev;
+		delete tail;
 
 		if (prevNode == nullptr) {
-			firstNode = nullptr;
+			head = nullptr;
 			prevNode = nullptr;
 		}
 		else {
-			currentNode = prevNode;
-			currentNode->next = nullptr;
+			tail = prevNode;
+			tail->next = nullptr;
 		}
 		nodes--;
 	}
@@ -78,7 +78,7 @@ public:
 	}
 
 	void print() {
-		Node* n = firstNode;
+		Node* n = head;
 		if (n == nullptr) {
 			std::cout << "empty" << std::endl;
 			return;
