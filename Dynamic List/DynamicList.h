@@ -2,6 +2,8 @@
 
 // Trying to make the same lists that python has
 
+#define LOG(x) std::cout << x << std::endl;
+
 template <class T>
 class DynamicList {
 private:
@@ -15,28 +17,26 @@ private:
 private:
 	int nodes;
 	Node* head;
-	Node* prevNode;
 	Node* tail;
 
 public:
 	DynamicList() {
 		nodes = 0;
 		head = nullptr;
-		prevNode = nullptr;
 		tail = nullptr;
 	}
+
 	~DynamicList() {
 		clear();
 	}
 
 	void append(T p_data) {
-		Node* node = new Node{ nodes, nullptr, nullptr, p_data };
+		Node* node = new Node{ nodes, tail, nullptr, p_data };
 
 		if (nodes == 0) {
 			head = node;
 		}
 		else {
-			node->prev = tail;
 			tail->next = node;
 		}
 
@@ -49,16 +49,16 @@ public:
 	}
 
 	void pop() {
-		prevNode = tail->prev;
-		delete tail;
-
-		if (prevNode == nullptr) {
+		if (tail->prev == nullptr) {
 			head = nullptr;
-			prevNode = nullptr;
+			delete tail;
+			tail = nullptr;
 		}
 		else {
-			tail = prevNode;
-			tail->next = nullptr;
+			Node* tmp = tail->prev;
+			tmp->next = nullptr;
+			delete tail;
+			tail = tmp;
 		}
 		nodes--;
 	}

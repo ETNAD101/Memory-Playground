@@ -1,11 +1,11 @@
 #include <iostream>
 #include <DynamicList.h>
 
-DynamicList<std::string> l;
+DynamicList<int> l;
 
 void populate(int p_size) {
 	for (int i = 0; i < p_size; i++) {
-		l.append("JKHGFDSFGJDFSLKGJDFGLSDFJGSDLGJNBSIDBJSDLBKJ");
+		l.append(i);
 	}
 }
 
