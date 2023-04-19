@@ -45,7 +45,19 @@ public:
 	}
 
 	void insert(T p_data, int p_pos) {
-
+		//float middle = nodes / 2;
+		if (p_pos > 1) {
+			Node* node = tail;
+			while (node->pos != p_pos) {
+				node = node->prev;
+			}
+			Node* newNode = new Node{ p_pos, node->prev, node, p_data };
+			nodes++;
+			while (node->next != nullptr) {
+				node->pos++;
+				node = node->next;
+			}
+		}
 	}
 
 	void pop() {

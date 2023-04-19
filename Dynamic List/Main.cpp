@@ -11,11 +11,10 @@ void populate(int p_size) {
 
 
 int main() {
-	std::cin.get();
-	for (int a = 0; a < 10; a++) {
-		populate(10000);
-		std::cin.get();
-		l.clear();
-		std::cin.get();
-	}
+	l.append(0);
+	l.append(1);
+	l.append(2);
+	l.append(3);
+	l.insert(500, 2);
+	l.print();
 }
