@@ -85,7 +85,8 @@ public:
 	}
 
 	void replace(int p_index, T p_value) {
-
+		Node* node = getNodeFromIndex(p_index);
+		node->value = p_value;
 	}
 
 	// Removes element from the end of a list
@@ -176,6 +177,18 @@ public:
 	int index(T p_value) {
 		Node* node = getNodeFromValue(p_value);
 		return node == nullptr ? -1 : node->index;
+	}
+
+	// Sorts the list using bubble sort
+	void sort() {
+		int i, j;
+		for (i = 0; i < nodes; i++)
+			for (j = 0; j < nodes - i - 1; j++)
+				if (getNodeFromIndex(j)->value > getNodeFromIndex(j + 1)->value) {
+					T temp = getNodeFromIndex(j)->value;
+					replace(j, getNodeFromIndex(j + 1)->value);
+					replace(j + 1, temp);
+				}
 	}
 
 	// Prints every element in the list to the console
