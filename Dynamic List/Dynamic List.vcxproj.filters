@@ -20,7 +20,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DynamicList.h">
+    <ClInclude Include="PyList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

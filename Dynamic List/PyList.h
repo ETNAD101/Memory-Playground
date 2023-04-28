@@ -5,7 +5,7 @@
 #define LOG(x) std::cout << x << std::endl;
 
 template <class T>
-class DynamicList {
+class PyList {
 private:
 	struct Node {
 		int pos;
@@ -20,13 +20,13 @@ private:
 	Node* tail;
 
 public:
-	DynamicList() {
+	PyList() {
 		nodes = 0;
 		head = nullptr;
 		tail = nullptr;
 	}
 
-	~DynamicList() {
+	~PyList() {
 		clear();
 	}
 
@@ -44,20 +44,22 @@ public:
 		nodes++;
 	}
 
-	void insert(T p_data, int p_pos) {
-		//float middle = nodes / 2;
-		if (p_pos > 1) {
-			Node* node = tail;
-			while (node->pos != p_pos) {
-				node = node->prev;
-			}
-			Node* newNode = new Node{ p_pos, node->prev, node, p_data };
-			nodes++;
-			while (node->next != nullptr) {
-				node->pos++;
-				node = node->next;
-			}
+	void insert(int p_pos, T p_data) {
+		Node* node = head;
+		while (node->pos != p_pos) {
+			node = node->next;
 		}
+		Node* newNode = new Node{ p_pos, node->prev, node, p_data };
+		
+		Node* prevNode = node->prev;
+		node->prev = newNode;
+		prevNode->next = newNode;
+
+		while (node != nullptr) {
+			node->pos += 1;
+			node = node->next;
+		}
+		nodes++;
 	}
 
 	void pop() {
@@ -76,11 +78,22 @@ public:
 	}
 
 	void pop(int p_pop) {
-
+		
 	}
 
 	int length() {
 		return nodes;
+	}
+
+	int index(T p_data) {
+		Node* node = head;
+		while (node->data != p_data) {
+			node = node->next;
+			if (node == nullptr) {
+				return -1;
+			}
+		}
+		return node->pos;
 	}
 
 	void clear() {
@@ -105,6 +118,18 @@ public:
 				break;
 			}
 		}
+	}
 
+	T operator[](int index) {
+		if (index < 0 || index > nodes)
+			return NULL;
+		Node* node = head;
+		while (node->pos != index) {
+			node = node->next;
+			if (node == nullptr) {
+				return -1;
+			}
+		}
+		return node->data;
 	}
 };

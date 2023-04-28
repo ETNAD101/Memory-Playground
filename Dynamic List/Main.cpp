@@ -1,7 +1,7 @@
 #include <iostream>
-#include <DynamicList.h>
+#include <PyList.h>
 
-DynamicList<int> l;
+PyList<int> l;
 
 void populate(int p_size) {
 	for (int i = 0; i < p_size; i++) {
@@ -11,10 +11,10 @@ void populate(int p_size) {
 
 
 int main() {
-	l.append(0);
-	l.append(1);
-	l.append(2);
-	l.append(3);
-	l.insert(500, 2);
-	l.print();
+	for (int i = 0; i < 15; i++) {
+		l.append(i + 5);
+	}
+	for (int i = 0; i < l.length(); i++) {
+		std::cout << "l[" << i << "] = " << l[i] << std::endl;
+	}
 }
