@@ -17,4 +17,7 @@ int main() {
 	for (int i = 0; i < l.length(); i++) {
 		std::cout << "l[" << i << "] = " << l[i] << std::endl;
 	}
+	
+	l.pop(5);
+	l.print();
 }

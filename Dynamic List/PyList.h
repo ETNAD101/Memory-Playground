@@ -77,8 +77,26 @@ public:
 		nodes--;
 	}
 
-	void pop(int p_pop) {
-		
+	void pop(int p_pos) {
+		Node* node = head;
+		while (node->pos != p_pos) {
+			node = node->next;
+		}
+
+		Node* prevNode = node->prev;
+		Node* nextNode = node->next;
+		prevNode->next = nextNode;
+		nextNode->prev = prevNode;
+
+		delete node;
+
+		node = nextNode;
+
+		while (node != nullptr) {
+			node->pos -= 1;
+			node = node->next;
+		}
+		nodes--;
 	}
 
 	int length() {
