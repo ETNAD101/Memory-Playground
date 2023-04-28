@@ -30,6 +30,7 @@ public:
 		clear();
 	}
 
+	// Adds an element to the end of the list
 	void append(T p_data) {
 		Node* node = new Node{ nodes, tail, nullptr, p_data };
 
@@ -44,6 +45,7 @@ public:
 		nodes++;
 	}
 
+	// Inserts a new element at the specified index
 	void insert(int p_pos, T p_data) {
 		Node* node = head;
 		while (node->pos != p_pos) {
@@ -62,6 +64,7 @@ public:
 		nodes++;
 	}
 
+	// Removes element from the end of a list
 	void pop() {
 		if (tail->prev == nullptr) {
 			head = nullptr;
@@ -77,6 +80,7 @@ public:
 		nodes--;
 	}
 
+	// Removes an element at specified index
 	void pop(int p_pos) {
 		Node* node = head;
 		while (node->pos != p_pos) {
@@ -99,10 +103,12 @@ public:
 		nodes--;
 	}
 
+	// Returns the number of elements in the list
 	int length() {
 		return nodes;
 	}
 
+	// Returns the index of the first element with the given value
 	int index(T p_data) {
 		Node* node = head;
 		while (node->data != p_data) {
@@ -114,12 +120,14 @@ public:
 		return node->pos;
 	}
 
+	// Removes every element in the list
 	void clear() {
 		while (nodes > 0) {
 			pop();
 		}
 	}
 
+	// Prints every element in the list to the console
 	void print() {
 		Node* n = head;
 		if (n == nullptr) {
@@ -138,6 +146,7 @@ public:
 		}
 	}
 
+	// returns the value at the specified index
 	T operator[](int index) {
 		if (index < 0 || index > nodes)
 			return NULL;
