@@ -8,7 +8,7 @@ template <class T>
 class PyList {
 private:
 	struct Node {
-		int pos;
+		int index;
 		Node* prev;
 		Node* next;
 		T value;
@@ -18,6 +18,29 @@ private:
 	int nodes;
 	Node* head;
 	Node* tail;
+
+private:
+	Node* getNodeFromIndex(int p_index) {
+		Node* node = head;
+		while (node->index != p_index) {
+			node = node->next;
+			if (node == nullptr) {
+				return nullptr;
+			}
+		}
+		return node;
+	}
+
+	Node* getNodeFromValue(int p_value) {
+		Node* node = head;
+		while (node->value != p_value) {
+			node = node->next;
+			if (node == nullptr) {
+				return nullptr;
+			}
+		}
+		return node;
+	}
 
 public:
 	PyList() {
@@ -46,22 +69,23 @@ public:
 	}
 
 	// Inserts a new element at the specified index
-	void insert(int p_pos, T p_value) {
-		Node* node = head;
-		while (node->pos != p_pos) {
-			node = node->next;
-		}
-		Node* newNode = new Node{ p_pos, node->prev, node, p_value };
+	void insert(int p_index, T p_value) {
+		Node* node = getNodeFromIndex(p_index);
+		Node* newNode = new Node{ p_index, node->prev, node, p_value };
 		
 		Node* prevNode = node->prev;
 		node->prev = newNode;
 		prevNode->next = newNode;
 
 		while (node != nullptr) {
-			node->pos += 1;
+			node->index += 1;
 			node = node->next;
 		}
 		nodes++;
+	}
+
+	void replace(int p_index, T p_value) {
+
 	}
 
 	// Removes element from the end of a list
@@ -81,11 +105,8 @@ public:
 	}
 
 	// Removes an element at specified index
-	void pop(int p_pos) {
-		Node* node = head;
-		while (node->pos != p_pos) {
-			node = node->next;
-		}
+	void pop(int p_index) {
+		Node* node = getNodeFromIndex(p_index);
 
 		Node* prevNode = node->prev;
 		Node* nextNode = node->next;
@@ -97,7 +118,7 @@ public:
 		node = nextNode;
 
 		while (node != nullptr) {
-			node->pos -= 1;
+			node->index -= 1;
 			node = node->next;
 		}
 		nodes--;
@@ -105,13 +126,8 @@ public:
 
 	// Removes the first element with the specified value
 	void remove(T p_value) {
-		Node* node = head;
-		while (node->value != p_value) {
-			node = node->next;
-			if (node == nullptr) {
-				return;
-			}
-		}
+		Node* node = getNodeFromValue;
+		if (node == nullptr) return;
 
 		Node* prevNode = node->prev;
 		Node* nextNode = node->next;
@@ -123,7 +139,7 @@ public:
 		node = nextNode;
 
 		while (node != nullptr) {
-			node->pos -= 1;
+			node->index -= 1;
 			node = node->next;
 		}
 		nodes--;
@@ -158,14 +174,8 @@ public:
 
 	// Returns the index of the first element with the given value
 	int index(T p_value) {
-		Node* node = head;
-		while (node->value != p_value) {
-			node = node->next;
-			if (node == nullptr) {
-				return -1;
-			}
-		}
-		return node->pos;
+		Node* node = getNodeFromValue(p_value);
+		return node == nullptr ? -1 : node->index;
 	}
 
 	// Prints every element in the list to the console
@@ -188,16 +198,10 @@ public:
 	}
 
 	// returns the value at the specified index
-	T operator[](int index) {
-		if (index < 0 || index > nodes)
+	T operator[](int p_index) {
+		if (p_index < 0 || p_index > nodes)
 			return NULL;
-		Node* node = head;
-		while (node->pos != index) {
-			node = node->next;
-			if (node == nullptr) {
-				return -1;
-			}
-		}
-		return node->value;
+		Node* node = getNodeFromIndex(p_index);
+		return node == nullptr ? -1 : node->value;
 	}
 };

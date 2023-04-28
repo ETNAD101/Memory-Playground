@@ -1,17 +1,13 @@
 #include <iostream>
 #include <PyList.h>
 
-PyList<std::string> l;
+
 
 int main() {
-	l.append("apple");
-	l.append("orange");
-	l.append("apple");
-	l.append("orange");
-	l.append("pear");
-	l.append("orange");
-	std::cout << l.count("apple") << ", " << l.count("orange") << ", " << l.count("pear");
-	l.remove("pear");
-	l.print();
-	std::cout << l.count("pear") << ", " << l.length();
+	PyList<int> l;
+	l.append(10);
+	l.append(20);
+	l.append(30);
+	l.append(40);
+	std::cout << l[2];
 }
