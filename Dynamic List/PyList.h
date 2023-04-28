@@ -103,6 +103,7 @@ public:
 		nodes--;
 	}
 
+	// Removes the first element with the specified value
 	void remove(T p_value) {
 		Node* node = head;
 		while (node->value != p_value) {
