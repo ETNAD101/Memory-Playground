@@ -11,7 +11,7 @@ private:
 		int pos;
 		Node* prev;
 		Node* next;
-		T data;
+		T value;
 	};
 
 private:
@@ -31,8 +31,8 @@ public:
 	}
 
 	// Adds an element to the end of the list
-	void append(T p_data) {
-		Node* node = new Node{ nodes, tail, nullptr, p_data };
+	void append(T p_value) {
+		Node* node = new Node{ nodes, tail, nullptr, p_value };
 
 		if (nodes == 0) {
 			head = node;
@@ -46,12 +46,12 @@ public:
 	}
 
 	// Inserts a new element at the specified index
-	void insert(int p_pos, T p_data) {
+	void insert(int p_pos, T p_value) {
 		Node* node = head;
 		while (node->pos != p_pos) {
 			node = node->next;
 		}
-		Node* newNode = new Node{ p_pos, node->prev, node, p_data };
+		Node* newNode = new Node{ p_pos, node->prev, node, p_value };
 		
 		Node* prevNode = node->prev;
 		node->prev = newNode;
@@ -103,21 +103,29 @@ public:
 		nodes--;
 	}
 
-	// Returns the number of elements in the list
-	int length() {
-		return nodes;
-	}
-
-	// Returns the index of the first element with the given value
-	int index(T p_data) {
+	void remove(T p_value) {
 		Node* node = head;
-		while (node->data != p_data) {
+		while (node->value != p_value) {
 			node = node->next;
 			if (node == nullptr) {
-				return -1;
+				return;
 			}
 		}
-		return node->pos;
+
+		Node* prevNode = node->prev;
+		Node* nextNode = node->next;
+		prevNode->next = nextNode;
+		nextNode->prev = prevNode;
+
+		delete node;
+
+		node = nextNode;
+
+		while (node != nullptr) {
+			node->pos -= 1;
+			node = node->next;
+		}
+		nodes--;
 	}
 
 	// Removes every element in the list
@@ -125,6 +133,38 @@ public:
 		while (nodes > 0) {
 			pop();
 		}
+	}
+
+	// Returns the number of elements in the list
+	int length() {
+		return nodes;
+	}
+
+	// Returns the number of elements with the specified value
+	int count(T p_value) {
+		Node* node = head;
+		int count = 0;
+		
+		while (node != nullptr) {
+			if (node->value == p_value) {
+				count++;
+			}
+			node = node->next;
+		}
+
+		return count;
+	}
+
+	// Returns the index of the first element with the given value
+	int index(T p_value) {
+		Node* node = head;
+		while (node->value != p_value) {
+			node = node->next;
+			if (node == nullptr) {
+				return -1;
+			}
+		}
+		return node->pos;
 	}
 
 	// Prints every element in the list to the console
@@ -135,7 +175,7 @@ public:
 			return;
 		}
 		while (true) {
-			std::cout << "{" << n->data << "}";
+			std::cout << "{" << n->value << "}";
 			if (n->next != nullptr) {
 				n = n->next;
 			}
@@ -157,6 +197,6 @@ public:
 				return -1;
 			}
 		}
-		return node->data;
+		return node->value;
 	}
 };
