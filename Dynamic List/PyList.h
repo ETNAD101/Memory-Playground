@@ -191,6 +191,22 @@ public:
 				}
 	}
 
+	// Reverses the list
+	void reverse() {
+		T* values = new T[nodes];
+		Node* node = tail;
+		for (int i = 0; i < nodes; i++) {
+			(*values)[i] = 5;
+			node = node->prev;
+		}
+
+		for (int i = 0; i < nodes; i++) {
+			node->value = (*values)[i];
+			node = node->next;
+		}
+		delete[] values;
+	}
+
 	// Prints every element in the list to the console
 	void print() {
 		Node* n = head;

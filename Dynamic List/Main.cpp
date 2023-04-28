@@ -4,14 +4,11 @@
 
 
 int main() {
-	PyList<char> l;
-	l.append('a');
-	l.append('y');
-	l.append('z');
-	l.append('b');
-	l.append('f');
-	l.append('j');
+	PyList<int> l;
+	for (int i = 0; i < 10; i++) {
+		l.append(i);
+	}
 	l.print();
-	l.sort();
+	l.reverse();
 	l.print();
 }
