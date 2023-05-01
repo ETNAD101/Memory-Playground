@@ -8,12 +8,12 @@ int main() {
 	for (int i = 0; i < 11; i++) {
 		l.append(i);
 	}
+	PyList<int> other;
+	for (int i = 0; i < 5; i++) {
+		other.append(i);
+	}
+	l = other;
 	l.print();
 	l.reverse();
 	l.print();
-	int* arr = l.toArray();
-	for (int i = 0; i < 11; i++) {
-		std::cout << arr[i] << ", ";
-	}
-	delete[] arr;
 }

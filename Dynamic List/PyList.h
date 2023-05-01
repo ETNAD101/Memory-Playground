@@ -109,7 +109,8 @@ public:
 	}
 
 	// Removes element from the end of a list
-	void pop() {
+	T pop() {
+		T value = tail->value;
 		if (tail->prev == nullptr) {
 			head = nullptr;
 			delete tail;
@@ -122,12 +123,13 @@ public:
 			tail = tmp;
 		}
 		nodes--;
+		return value;
 	}
 
 	// Removes an element at specified index
 	void pop(int p_index) {
 		Node* node = getNodeFromIndex(p_index);
-
+		T value = node->value;
 		Node* prevNode = node->prev;
 		Node* nextNode = node->next;
 		prevNode->next = nextNode;
@@ -142,6 +144,7 @@ public:
 			node = node->next;
 		}
 		nodes--;
+		return value;
 	}
 
 	// Removes the first element with the specified value
@@ -253,5 +256,12 @@ public:
 			return NULL;
 		Node* node = getNodeFromIndex(p_index);
 		return node == nullptr ? -1 : node->value;
+	}
+
+	void operator=(PyList that) {
+		clear();
+		for (int i = 0; i < that.length(); i++) {
+			this->append(that[i]);
+		}
 	}
 };
