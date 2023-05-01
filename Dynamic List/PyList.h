@@ -13,8 +13,8 @@ Methods added:
 	pop
 	reverse
 	sort
-	replace (try to change function to list[x] = y)
 	toArray
+	overload[]
 Methods to add:
 	copy
 	extend
@@ -99,13 +99,6 @@ public:
 			node = node->next;
 		}
 		nodes++;
-	}
-
-	// Replaces the value at a certain index
-	// (Try to replace this function with list[x] = y)
-	void replace(int p_index, T p_value) {
-		Node* node = getNodeFromIndex(p_index);
-		node->value = p_value;
 	}
 
 	// Removes element from the end of a list
@@ -250,12 +243,10 @@ public:
 		}
 	}
 
-	// returns the value at the specified index
-	T operator[](int p_index) {
-		if (p_index < 0 || p_index > nodes)
-			return NULL;
-		Node* node = getNodeFromIndex(p_index);
-		return node == nullptr ? -1 : node->value;
+	// returns a reference to the value at the index
+	T& operator[](int p_index) {
+		T& ref = getNodeFromIndex(p_index)->value;
+		return ref;
 	}
 
 	void operator=(PyList that) {

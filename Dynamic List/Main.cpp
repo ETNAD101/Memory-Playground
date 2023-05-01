@@ -5,15 +5,10 @@
 
 int main() {
 	PyList<int> l;
-	for (int i = 0; i < 11; i++) {
+	for (int i = 0; i < 22; i += 2) {
 		l.append(i);
 	}
-	PyList<int> other;
-	for (int i = 0; i < 5; i++) {
-		other.append(i);
-	}
-	l = other;
-	l.print();
-	l.reverse();
+	std::cout << l[5] << std::endl;
+	l[0] = 4;
 	l.print();
 }
