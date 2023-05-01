@@ -1,8 +1,25 @@
 #pragma once
 
-// Trying to make the same lists that python has
-
 #define LOG(x) std::cout << x << std::endl;
+
+// Trying to make the same lists that python has
+/*
+Methods added:
+	append
+	clear
+	count
+	index
+	insert
+	pop
+	reverse
+	sort
+	replace (try to change function to list[x] = y)
+	toArray
+Methods to add:
+	copy
+	extend
+
+*/
 
 template <class T>
 class PyList {
@@ -84,6 +101,8 @@ public:
 		nodes++;
 	}
 
+	// Replaces the value at a certain index
+	// (Try to replace this function with list[x] = y)
 	void replace(int p_index, T p_value) {
 		Node* node = getNodeFromIndex(p_index);
 		node->value = p_value;
@@ -193,18 +212,20 @@ public:
 
 	// Reverses the list
 	void reverse() {
-		T* values = new T[nodes];
-		Node* node = tail;
-		for (int i = 0; i < nodes; i++) {
-			(*values)[i] = 5;
-			node = node->prev;
+		for (int i = 0; i < nodes / 2; i++) {
+			T temp = getNodeFromIndex(i)->value;
+			replace(i, getNodeFromIndex(nodes - 1 - i)->value);
+			replace(nodes - 1 - i, temp);
 		}
+	}
 
+	// Return array of current elements
+	T* toArray() {
+		T* arr = new T[nodes];
 		for (int i = 0; i < nodes; i++) {
-			node->value = (*values)[i];
-			node = node->next;
+			arr[i] = getNodeFromIndex(i)->value;
 		}
-		delete[] values;
+		return arr;
 	}
 
 	// Prints every element in the list to the console
